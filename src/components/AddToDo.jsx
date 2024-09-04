@@ -1,8 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 function AddToDo() {
+  const[text, setText] = useState('');
+
+  function handleSubmit(e){
+    e.preventDefault();
+    
+  }
+
   return (
-    <div>AddToDo</div>
+    <form onSubmit={handleSubmit}>
+      <input type="text" name='task' value={text} placeholder='Write your next task' className='input'/>
+      <button type='submit'>Add Todo</button>
+    </form>
   )
 }
 
