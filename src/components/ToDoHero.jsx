@@ -2,7 +2,7 @@ import React from "react";
 
 function ToDoHero() {
   return (
-    <div>
+    <div className="hero">
       <h2>
         Task Done
         <br />

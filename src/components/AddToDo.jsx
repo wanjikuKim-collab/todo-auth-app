@@ -11,7 +11,7 @@ function AddToDo() {
   return (
     <form onSubmit={handleSubmit}>
       <input type="text" name='task' value={text} placeholder='Write your next task' className='input'/>
-      <button type='submit'>Add Todo</button>
+      <button type='submit'>+</button>
     </form>
   )
 }

@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       <div className="app">
-        <h1>KIMMY TODO</h1>
+        <h1 className="title">KIMMY TODO</h1>
         <ToDoHero />
         <AddToDo />
         {/* filters the list */}
