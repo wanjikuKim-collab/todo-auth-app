@@ -1,10 +1,14 @@
 import React from "react";
 
 function Show({ filter, bool }) {
+  function onclick(){
+    alert('hi')
+  }
   return (
-    <button type="button" aria-pressed={bool}>
+    <button onClick={onclick} type="button" aria-pressed={bool}>
       <span className="visually-hidden">Show </span>
-      {filter} <span className="visually-hidden">tasks</span>
+      <span>{filter} </span>
+      <span className="visually-hidden">tasks</span>
     </button>
   );
 }
