@@ -27,7 +27,7 @@ function App() {
   // ];
 
   function addTask(name){
-    const newTask = { id:"id", name, completed: false};
+    const newTask = { id:nanoid(), name, completed: false};
     setTasks([...tasks, newTask])
     }
 
