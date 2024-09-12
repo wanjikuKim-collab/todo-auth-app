@@ -4,39 +4,51 @@ import AddToDo from "./components/AddToDo.jsx";
 import TodoItem from "./components/ToDoItem.jsx";
 import ToDoHero from "./components/ToDoHero.jsx";
 import Show from "./components/Show.jsx";
-import {nanoid} from "nanoid";
+import { nanoid } from "nanoid";
 
 function App() {
-  const[tasks, setTasks] = useState([])
-  // let task = [
-  //   {
-  //     id: 0,
-  //     name: "Finish ToDo App",
-  //     completed: true,
-  //   },
-  //   {
-  //     id: 1,
-  //     name: "Develop the Museum mockup",
-  //     completed: false,
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Research on rust frameworks",
-  //     completed: false,
-  //   },
-  // ];
+  const [tasks, setTasks] = useState([]);
+  let defaultTask = [
+    {
+      id: 0,
+      name: "Finish ToDo App",
+      completed: true,
+    },
+    {
+      id: 1,
+      name: "Develop the Museum mockup",
+      completed: false,
+    },
+    {
+      id: 2,
+      name: "Research on rust frameworks",
+      completed: false,
+    },
+  ];
 
-  function addTask(name){
-    const newTask = { id:nanoid(), name, completed: false};
-    setTasks([...tasks, newTask])
-    }
+  // callback prop function to add task from the form
+  function addTask(name) {
+    const newTask = { id: nanoid(), name, completed: false };
+    setTasks([...tasks, newTask]);
+  }
 
+  // function for conditional rendering of the default task list or the new task list
+  function renderTaskList(taskList) {
+    return taskList.map((task) => (
+      <TodoItem
+        key={task.id}
+        id={task.id}
+        task={task.name}
+        completed={task.completed}
+      />
+    ));
+  }
   return (
     <>
       <div className="app">
         <h1 className="title">KIMMY TODO</h1>
         <ToDoHero />
-        <AddToDo addTask={addTask}/>
+        <AddToDo addTask={addTask} />
         {/* filters the list */}
         <div className="filters">
           <Show filter="all" bool="true" />
@@ -44,14 +56,9 @@ function App() {
           <Show filter="completed" bool="false" />
         </div>
         <ul role="list" className="todo_list" aria-labelledby="list-heading">
-          {tasks?.map((task) => (
-            <TodoItem
-              key={task.id}
-              id={task.id}
-              task={task.name}
-              completed={task.completed}
-            />
-          ))}
+          {tasks.length === 0
+            ? (renderTaskList(defaultTask))
+            : (renderTaskList(tasks))}
         </ul>
       </div>
     </>
