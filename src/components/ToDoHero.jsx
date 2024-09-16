@@ -1,6 +1,6 @@
 import React from "react";
 
-function ToDoHero() {
+function ToDoHero({length}) {
   return (
     <div className="hero">
       <h2>
@@ -8,7 +8,7 @@ function ToDoHero() {
         <br />
         <span>Keep it Up!</span>
       </h2>
-      <p>1/3</p>
+      <p>1/{length}</p>
     </div>
   );
 }

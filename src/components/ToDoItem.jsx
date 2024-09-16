@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 
 // An item on the todo list
-function ToDoItem({ task, completed, id }) {
+function ToDoItem({ task, completed, id, toggleTaskCompleted }) {
+
   return (
     <li className="todo_item">
       <div>
@@ -12,6 +13,7 @@ function ToDoItem({ task, completed, id }) {
           name={id}
           id={id}
           defaultChecked={completed}
+          onChange={()=> toggleTaskCompleted(id)}
         />
         <label className="todo-label" htmlFor={id}>
           {task}

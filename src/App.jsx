@@ -40,14 +40,26 @@ function App() {
         id={task.id}
         task={task.name}
         completed={task.completed}
+        toggleTaskCompleted ={toggleTaskCompleted}
       />
     ));
   }
+
+  function toggleTaskCompleted(id){
+    const updatedTasks = tasks.map((task)=>{
+     if(id === task.id )({ ...task, completed: !task.completed })
+      return task;
+    });
+    return setTasks(updatedTasks);
+  }
+
+  let taskLength = tasks.length === 0 ? defaultTask.length : tasks.length;
+  console.log("Task length :",taskLength)
   return (
     <>
       <div className="app">
         <h1 className="title">KIMMY TODO</h1>
-        <ToDoHero />
+        <ToDoHero length = {taskLength}/>
         <AddToDo addTask={addTask} />
         {/* filters the list */}
         <div className="filters">

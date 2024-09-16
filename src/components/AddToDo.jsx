@@ -9,6 +9,7 @@ function AddToDo({addTask}) {
     setInput("")
   }
 
+  // Reading user input and updating state
   function handleChange(e) {
     setInput(e.target.value)
   }
