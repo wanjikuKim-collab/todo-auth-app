@@ -41,16 +41,27 @@ function App() {
         task={task.name}
         completed={task.completed}
         toggleTaskCompleted ={toggleTaskCompleted}
+        deleteTask = {deleteTask}
       />
     ));
   }
-
+  
+  // Changing task state to complete
+  let selectList = tasks.length=== 0? defaultTask : tasks
   function toggleTaskCompleted(id){
-    const updatedTasks = tasks.map((task)=>{
-     if(id === task.id )({ ...task, completed: !task.completed })
-      return task;
-    });
-    return setTasks(updatedTasks);
+      const updatedTasks = selectList.map((task)=>{
+       if(id === task.id )({ ...task, completed: !task.completed })
+        console.log("Check isChecked", task);
+        return task;
+      });
+      return setTasks(updatedTasks);
+  }
+
+  // Filter task you want to delete out. Use Id to identify task, then update state using setTask
+  function deleteTask(id){
+    // console.log(id)
+    const filteredTasks = selectList.filter(task=> task.id !== id);
+    return setTasks(filteredTasks)
   }
 
   let taskLength = tasks.length === 0 ? defaultTask.length : tasks.length;
@@ -68,9 +79,7 @@ function App() {
           <Show filter="completed" bool="false" />
         </div>
         <ul role="list" className="todo_list" aria-labelledby="list-heading">
-          {tasks.length === 0
-            ? (renderTaskList(defaultTask))
-            : (renderTaskList(tasks))}
+          {renderTaskList(selectList)}
         </ul>
       </div>
     </>
