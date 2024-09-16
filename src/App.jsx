@@ -42,26 +42,36 @@ function App() {
         completed={task.completed}
         toggleTaskCompleted ={toggleTaskCompleted}
         deleteTask = {deleteTask}
+        editTask = {editTask}
       />
     ));
   }
   
-  // Changing task state to complete
   let selectList = tasks.length=== 0? defaultTask : tasks
+  console.log("Tasks isChecked b4 function call", selectList)
+  // Changing task state to complete
   function toggleTaskCompleted(id){
-      const updatedTasks = selectList.map((task)=>{
-       if(id === task.id )({ ...task, completed: !task.completed })
-        console.log("Check isChecked", task);
-        return task;
-      });
-      return setTasks(updatedTasks);
+      setTasks( selectList.map((task)=>{
+       if(id === task.id ){
+        return { ...task, completed: !task.completed }// Return updated task
+       }
+        return task; // Return task unchanged if ID doesn't match
+      }));
   }
+  console.log("Tasks isChecked after function call", selectList)
+
 
   // Filter task you want to delete out. Use Id to identify task, then update state using setTask
   function deleteTask(id){
     // console.log(id)
     const filteredTasks = selectList.filter(task=> task.id !== id);
     return setTasks(filteredTasks)
+  }
+
+
+  // function to edit task
+  function editTask(id){
+    console.log(id)
   }
 
   let taskLength = tasks.length === 0 ? defaultTask.length : tasks.length;

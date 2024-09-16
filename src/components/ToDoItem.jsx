@@ -3,8 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 
 // An item on the todo list
-function ToDoItem({ task, completed, id, toggleTaskCompleted, deleteTask }) {
-
+function ToDoItem({
+  task,
+  completed,
+  id,
+  toggleTaskCompleted,
+  deleteTask,
+  editTask,
+}) {
   return (
     <li className="todo_item">
       <div>
@@ -13,18 +19,18 @@ function ToDoItem({ task, completed, id, toggleTaskCompleted, deleteTask }) {
           name={id}
           id={id}
           defaultChecked={completed}
-          onChange={()=> toggleTaskCompleted(id)}
+          onChange={() => toggleTaskCompleted(id)}
         />
         <label className="todo-label" htmlFor={id}>
           {task}
         </label>
       </div>
       <div className="btn-group">
-        <button className="btn" type="button">
+        <button className="btn" type="button" onClick={() => editTask(id)}>
           <span className="visually-hidden">{task}</span>
           <FontAwesomeIcon icon={faPenToSquare} />{" "}
         </button>
-        <button className="btn" type="button" onClick={()=> deleteTask(id)}>
+        <button className="btn" type="button" onClick={() => deleteTask(id)}>
           <span className="visually-hidden">{task}</span>
           <FontAwesomeIcon icon={faTrashCan} />{" "}
         </button>
