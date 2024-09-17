@@ -8,6 +8,7 @@ import { nanoid } from "nanoid";
 
 function App() {
   const [tasks, setTasks] = useState([]);
+
   let defaultTask = [
     {
       id: 0,
@@ -40,47 +41,50 @@ function App() {
         id={task.id}
         task={task.name}
         completed={task.completed}
-        toggleTaskCompleted ={toggleTaskCompleted}
-        deleteTask = {deleteTask}
-        editTask = {editTask}
+        toggleTaskCompleted={toggleTaskCompleted}
+        deleteTask={deleteTask}
+        editTask={editTask}
       />
     ));
   }
-  
-  let selectList = tasks.length=== 0? defaultTask : tasks
-  console.log("Tasks isChecked b4 function call", selectList)
-  // Changing task state to complete
-  function toggleTaskCompleted(id){
-      setTasks( selectList.map((task)=>{
-       if(id === task.id ){
-        return { ...task, completed: !task.completed }// Return updated task
-       }
-        return task; // Return task unchanged if ID doesn't match
-      }));
-  }
-  console.log("Tasks isChecked after function call", selectList)
 
+  let selectList = tasks.length === 0 ? defaultTask : tasks;
+  console.log("Tasks isChecked b4 function call", selectList);
+  // Changing task state to complete
+  function toggleTaskCompleted(id) {
+    setTasks(
+      selectList.map((task) => {
+        if (id === task.id) {
+          return { ...task, completed: !task.completed }; // Return updated task
+        }
+        return task; // Return task unchanged if ID doesn't match
+      })
+    );
+  }
+  console.log("Tasks isChecked after function call", selectList);
 
   // Filter task you want to delete out. Use Id to identify task, then update state using setTask
-  function deleteTask(id){
+  function deleteTask(id) {
     // console.log(id)
-    const filteredTasks = selectList.filter(task=> task.id !== id);
-    return setTasks(filteredTasks)
+    const filteredTasks = selectList.filter((task) => task.id !== id);
+    return setTasks(filteredTasks);
   }
 
-
   // function to edit task
-  function editTask(id){
-    console.log(id)
+  function editTask(id, newName) {
+    const updatedTask = selectList.map((task) => {
+      return id === task.id ? { ...task, name: newName } : task;
+    });
+    return setTasks(updatedTask);
   }
 
   let taskLength = tasks.length === 0 ? defaultTask.length : tasks.length;
-  console.log("Task length :",taskLength)
+  console.log("Task length :", taskLength);
   return (
     <>
       <div className="app">
         <h1 className="title">KIMMY TODO</h1>
-        <ToDoHero length = {taskLength}/>
+        <ToDoHero length={taskLength} />
         <AddToDo addTask={addTask} />
         {/* filters the list */}
         <div className="filters">

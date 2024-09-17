@@ -14,7 +14,7 @@ function AddToDo({addTask}) {
     setInput(e.target.value)
   }
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="add-form" onSubmit={handleSubmit}>
       <input
         className="input"
         type="text"
