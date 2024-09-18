@@ -3,11 +3,34 @@ import "./App.css";
 import AddToDo from "./components/AddToDo.jsx";
 import TodoItem from "./components/ToDoItem.jsx";
 import ToDoHero from "./components/ToDoHero.jsx";
-import Show from "./components/Show.jsx";
+import FilterButton from "./components/FilterButton.jsx";
 import { nanoid } from "nanoid";
+
+/* DEFINING OUR FILTERS*/
+const FILTER_MAP = {
+  All: () => true,
+  Active: (task) => !task.completed,
+  Completed: (task) => task.completed,
+};
+
+// Creates an array of the keys
+const FILTER_NAMES = Object.keys(FILTER_MAP);
+console.log(FILTER_NAMES); // Output: ["All", "Active", "Completed"]
 
 function App() {
   const [tasks, setTasks] = useState([]);
+  const [filter, setFilter] = useState("All"); //Adds a filter hook
+
+  // Renders filters
+  const filterList = FILTER_NAMES.map((name) => (
+    <FilterButton
+      key={name}
+      name={name}
+      isPressed={name === filter}
+      onClick={()=>setFilter(name)}
+    />
+  ));
+  
 
   let defaultTask = [
     {
@@ -35,17 +58,19 @@ function App() {
 
   // function for conditional rendering of the default task list or the new task list
   function renderTaskList(taskList) {
-    return taskList.map((task) => (
-      <TodoItem
-        key={task.id}
-        id={task.id}
-        task={task.name}
-        completed={task.completed}
-        toggleTaskCompleted={toggleTaskCompleted}
-        deleteTask={deleteTask}
-        editTask={editTask}
-      />
-    ));
+    return taskList
+      .filter(FILTER_MAP[filter])
+      .map((task) => (
+        <TodoItem
+          key={task.id}
+          id={task.id}
+          task={task.name}
+          completed={task.completed}
+          toggleTaskCompleted={toggleTaskCompleted}
+          deleteTask={deleteTask}
+          editTask={editTask}
+        />
+      ));
   }
 
   let selectList = tasks.length === 0 ? defaultTask : tasks;
@@ -87,11 +112,7 @@ function App() {
         <ToDoHero length={taskLength} />
         <AddToDo addTask={addTask} />
         {/* filters the list */}
-        <div className="filters">
-          <Show filter="all" bool="true" />
-          <Show filter="active" bool="false" />
-          <Show filter="completed" bool="false" />
-        </div>
+        <div className="filters">{filterList}</div>
         <ul role="list" className="todo_list" aria-labelledby="list-heading">
           {renderTaskList(selectList)}
         </ul>
