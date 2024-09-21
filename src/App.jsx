@@ -74,7 +74,6 @@ function App() {
   }
 
   let selectList = tasks.length === 0 ? defaultTask : tasks;
-  console.log("Tasks isChecked b4 function call", selectList);
   // Changing task state to complete
   function toggleTaskCompleted(id) {
     setTasks(
@@ -86,7 +85,6 @@ function App() {
       })
     );
   }
-  console.log("Tasks isChecked after function call", selectList);
 
   // Filter task you want to delete out. Use Id to identify task, then update state using setTask
   function deleteTask(id) {

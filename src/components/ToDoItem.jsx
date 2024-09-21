@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTrashCan,
@@ -7,17 +7,36 @@ import {
   faX,
 } from "@fortawesome/free-solid-svg-icons";
 
+
+//custom hook that tracks previous edit value across renders. 
+function usePrevious(value){
+  const ref = useRef();
+  useEffect(()=>{
+    console.log("custom hook")
+    ref.current = value;
+  });
+  return ref.current;
+}
+
 // An item on the todo list
 function ToDoItem({
   task,
   completed,
   id,
-  toggleTaskCompleted,
+  toggleTaskCompleted,    
   deleteTask,
   editTask,
 }) {
   const [isEditing, setIsEditing] = useState(false);//Toggle between the edit and view state
   const [newName, setNewName] = useState(""); //Update the value of the object field from newName
+
+  const wasEditing = usePrevious(isEditing);
+  console.log(wasEditing)
+  console.log(isEditing)
+
+  // Targeting DOM elements
+  const editFieldRef = useRef(null);
+  const editButtonRef = useRef(null);
 
   function handleChange(e) {
     setNewName(e.target.value);
@@ -30,6 +49,15 @@ function ToDoItem({
     setIsEditing(false);
   }
 
+  useEffect(()=>{
+    if(!wasEditing && isEditing){
+      console.log("Focusing input field")
+      editFieldRef.current.focus();
+    } else if(wasEditing && !isEditing){
+      editButtonRef.current.focus();    
+    }
+  },[wasEditing,isEditing])
+
   return (
     <li className="todo_item">
       {isEditing ? (
@@ -41,6 +69,7 @@ function ToDoItem({
             type="text"
             onChange={handleChange}
             placeholder={task}
+            ref= {editFieldRef}
           />
           <div className="btn-group">
             <button
@@ -80,6 +109,7 @@ function ToDoItem({
               className="btn"
               type="button"
               onClick={() => setIsEditing(true)}
+              ref={editButtonRef}
             >
               <span className="visually-hidden">{task}</span>
               <FontAwesomeIcon icon={faPenToSquare} />{" "}

@@ -123,6 +123,12 @@ ul{
   padding: 10px;
 }
 
+input:focus{
+  outline: 2px solid #646cff;
+  box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Optional shadow for focus */
+
+}
+
 
 .add-form button {
   width: 10%;
